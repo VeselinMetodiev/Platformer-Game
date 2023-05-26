@@ -1,26 +1,79 @@
-// Get canvas and context
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
 
-// Set up game variables
+let score = 0;
+let lives = 3;
+
 let playerSpeed = 5;
 let playerWidth = 50;
 let playerHeight = 50;
 
 // Circle
 let playerX = canvas.width / 2;  // Initial X position
-let playerY = canvas.height / 2; // Initial Y position
-const radius = 12;        // Circle radius
+let playerY = 0; // Initial Y position
+const radius = 12;
 
-
-let platformSpeed = 3;
+let platformSpeed = 2;
 let platformX = 0;
 let platformY = 0;
 let platformWidth = 100;
 let platformHeight = 20;
 
-let score = 0;
-let lives = 3;
+  // Array to hold the platforms
+let platforms = [{
+          x: Math.random() * (canvas.width - 100),
+          y: 600,
+          width: platformWidth,
+          height: platformHeight
+        },
+	{
+          x: Math.random() * (canvas.width - 100),
+          y: 800,
+          width: platformWidth,
+          height: platformHeight
+        },
+	{
+          x: Math.random() * (canvas.width - 100),
+          y: 1000,
+          width: platformWidth,
+          height: platformHeight
+        },
+	{
+          x: Math.random() * (canvas.width - 100),
+          y: 1200,
+          width: platformWidth,
+          height: platformHeight
+        },
+	{
+          x: Math.random() * (canvas.width - 100),
+          y: 1400,
+          width: platformWidth,
+          height: platformHeight
+        },
+	{
+          x: Math.random() * (canvas.width - 100),
+          y: 1600,
+          width: platformWidth,
+          height: platformHeight
+        }];
+
+function drawPlatforms() {
+        for (let i = 0; i < platforms.length; i++) {
+          let platform = platforms[i];
+		  ctx.fillStyle = 'brown';
+          ctx.fillRect(platform.x, platform.y, platform.width, platform.height);
+        }
+      }
+
+	  // move the platforms down
+      function movePlatforms() {
+        for (let i = 0; i < platforms.length; i++) {
+          platforms[i].y -= platformSpeed;
+		  if(platforms[i].y < -50) {
+			platforms[i].y = 1000;
+		  }
+        }
+      }
 
 function drawCircle() {
     ctx.beginPath();
@@ -36,10 +89,8 @@ function draw() {
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
 
 	drawCircle();
-
-	// Draw platform
-	ctx.fillStyle = 'brown';
-	ctx.fillRect(platformX, platformY, platformWidth, platformHeight);
+	drawPlatforms();
+	movePlatforms();
 
 	// Draw score and lives
 	ctx.fillStyle = 'black';
@@ -149,7 +200,7 @@ if (event.code === 'ArrowUp') {
 	}
 })
 
-
+let i = 0;
 // Start game loop
 function gameLoop() {
 	update();
