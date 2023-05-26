@@ -114,8 +114,11 @@ function update() {
   // Move platform down
   platformY += platformSpeed;
 
-  // Gravity to Circle
-  playerY += platformSpeed;
+  if (checkCollision({ x: playerX, y: playerY, radius: radius }, platforms)) {
+    playerY -= platformSpeed;
+  } else {
+    playerY += platformSpeed;
+  }
 
   // Check for collision between player and enemy
   if (collides(playerY, radius)) {
@@ -154,6 +157,32 @@ function resetGame() {
   platformX = Math.random() * (canvas.width - platformWidth);
   score = 0;
   lives = 3;
+}
+
+// Function to check collision between circle and rectangle
+function checkCollision(circle, platforms) {
+  for (let i = 0; i < platforms.length; i++) {
+    let rectangle = platforms[i];
+    let circleDistanceX = Math.abs(
+      circle.x - rectangle.x - rectangle.width / 2
+    );
+    let circleDistanceY = Math.abs(
+      circle.y - rectangle.y - rectangle.height / 2
+    );
+
+    if (circleDistanceX > rectangle.width / 2 + circle.radius) continue;
+    if (circleDistanceY > rectangle.height / 2 + circle.radius) continue;
+
+    if (circleDistanceX <= rectangle.width / 2) return true;
+    if (circleDistanceY <= rectangle.height / 2) return true;
+
+    let cornerDistanceSq =
+      Math.pow(circleDistanceX - rectangle.width / 2, 2) +
+      Math.pow(circleDistanceY - rectangle.height / 2, 2);
+
+    return cornerDistanceSq <= Math.pow(circle.radius, 2);
+  }
+  return false;
 }
 
 // Check if the circle hits the bottom or top
