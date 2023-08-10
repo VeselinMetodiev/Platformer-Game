@@ -141,12 +141,6 @@ function update() {
     lifeLost();
   }
 
-  // // Check for collision between player and platform
-  // if (collides(playerX, playerY, playerWidth, playerHeight, platformX, platformY, platformWidth, platformHeight)) {
-  // 	score++;
-  // 	resetGame();
-  // }
-
   // Check for game over
   if (lives === 0) {
     alert("Game over!");
@@ -162,7 +156,6 @@ function lifeLost() {
   playerX = canvas.width / 2;
   playerY = 0;
   platformX = Math.random() * (canvas.width - platformWidth);
-  console.log(platformX);
 }
 
 // Reset game
@@ -197,7 +190,8 @@ function checkCollision(circle, platforms) {
       if (rectangle.isSpikes) {
         lifeLost();
       }
-    } return true;
+      return true;
+    }
 
 
     return cornerDistanceSq <= Math.pow(circle.radius, 2);
