@@ -188,12 +188,17 @@ function checkCollision(circle, platforms) {
     if (circleDistanceX > rectangle.width / 2 + circle.radius) continue;
     if (circleDistanceY > rectangle.height / 2 + circle.radius) continue;
 
-    if (circleDistanceX <= rectangle.width / 2) return true;
-    if (circleDistanceY <= rectangle.height / 2) return true;
-
     let cornerDistanceSq =
       Math.pow(circleDistanceX - rectangle.width / 2, 2) +
       Math.pow(circleDistanceY - rectangle.height / 2, 2);
+
+
+    if ((circleDistanceX <= rectangle.width / 2) || (circleDistanceY <= rectangle.height / 2) || (cornerDistanceSq)) {
+      if (rectangle.isSpikes) {
+        lifeLost();
+      }
+    } return true;
+
 
     return cornerDistanceSq <= Math.pow(circle.radius, 2);
   }
