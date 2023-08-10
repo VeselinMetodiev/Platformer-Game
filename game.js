@@ -84,7 +84,9 @@ function movePlatforms() {
   for (let i = 0; i < platforms.length; i++) {
     platforms[i].y -= platformSpeed;
     if (platforms[i].y < -50) {
-      platforms[i].isSpikes = Math.floor(Math.random() * 11) % 5 ? true : false;
+      let randomNum = Math.floor(Math.random() * 11);
+      console.log(randomNum);
+      platforms[i].isSpikes = randomNum % 5 === 0 ? true : false;
       platforms[i].y = 1000;
     }
   }
