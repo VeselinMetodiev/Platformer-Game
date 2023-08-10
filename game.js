@@ -119,10 +119,10 @@ function draw() {
 // Update game objects
 function update() {
   // Move player left or right
-  if (keys.left) {
+  if (keys.left && playerX > 0) {
     playerX -= playerSpeed;
   }
-  if (keys.right) {
+  if (keys.right && playerX < canvas.width) {
     playerX += playerSpeed;
   }
 
