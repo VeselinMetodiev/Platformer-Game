@@ -67,11 +67,30 @@ function initializePlatforms() {
   ];
 }
 
+const spikes = [
+  { x: 50, y: canvas.height - 20, width: 20, height: 20 },
+  { x: 100, y: canvas.height - 20, width: 20, height: 20 },
+  // Add more spike objects here
+];
+
+function drawSpike(x, y, width, height) {
+  ctx.beginPath();
+  ctx.moveTo(x, y);
+  ctx.lineTo(x + width / 2, y - height);
+  ctx.lineTo(x + width, y);
+  ctx.closePath();
+  ctx.fillStyle = 'red';
+  ctx.fill();
+}
+
 function drawPlatforms() {
   for (let i = 0; i < platforms.length; i++) {
     let platform = platforms[i];
     if (platform.isSpikes) {
       ctx.fillStyle = "red";
+      for (let j = 0; j < 7; j++) {
+        drawSpike(platform.x + 15 * j, platform.y, 10, 10);
+      }
     } else {
       ctx.fillStyle = "brown";
     }
@@ -108,6 +127,7 @@ function draw() {
   drawCircle();
   drawPlatforms();
   movePlatforms();
+
 
   // Draw score and lives
   ctx.fillStyle = "black";
