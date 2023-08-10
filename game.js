@@ -26,43 +26,53 @@ let platforms = [
     y: 600,
     width: platformWidth,
     height: platformHeight,
+    isSpikes: false
   },
   {
     x: Math.random() * (canvas.width - platformWidth),
     y: 800,
     width: platformWidth,
     height: platformHeight,
+    isSpikes: false
   },
   {
     x: Math.random() * (canvas.width - platformWidth),
     y: 1000,
     width: platformWidth,
     height: platformHeight,
+    isSpikes: false
   },
   {
     x: Math.random() * (canvas.width - platformWidth),
     y: 1200,
     width: platformWidth,
     height: platformHeight,
+    isSpikes: false
   },
   {
     x: Math.random() * (canvas.width - platformWidth),
     y: 1400,
     width: platformWidth,
     height: platformHeight,
+    isSpikes: false
   },
   {
     x: Math.random() * (canvas.width - platformWidth),
     y: 1600,
     width: platformWidth,
     height: platformHeight,
+    isSpikes: false
   },
 ];
 
 function drawPlatforms() {
   for (let i = 0; i < platforms.length; i++) {
     let platform = platforms[i];
-    ctx.fillStyle = "brown";
+    if (platform.isSpikes) {
+      ctx.fillStyle = "red";
+    } else {
+      ctx.fillStyle = "brown";
+    }
     ctx.fillRect(platform.x, platform.y, platform.width, platform.height);
   }
 }
@@ -72,6 +82,7 @@ function movePlatforms() {
   for (let i = 0; i < platforms.length; i++) {
     platforms[i].y -= platformSpeed;
     if (platforms[i].y < -50) {
+      platforms[i].isSpikes = Math.floor(Math.random() * 11) % 5 ? true : false;
       platforms[i].y = 1000;
     }
   }
