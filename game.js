@@ -18,52 +18,54 @@ let platformX = 0;
 let platformY = 0;
 let platformWidth = 100;
 let platformHeight = 20;
-
+let platforms = initializePlatforms();
 // Array to hold the platforms
-let platforms = [
-  {
-    x: Math.random() * (canvas.width - platformWidth),
-    y: 600,
-    width: platformWidth,
-    height: platformHeight,
-    isSpikes: false
-  },
-  {
-    x: Math.random() * (canvas.width - platformWidth),
-    y: 800,
-    width: platformWidth,
-    height: platformHeight,
-    isSpikes: false
-  },
-  {
-    x: Math.random() * (canvas.width - platformWidth),
-    y: 1000,
-    width: platformWidth,
-    height: platformHeight,
-    isSpikes: false
-  },
-  {
-    x: Math.random() * (canvas.width - platformWidth),
-    y: 1200,
-    width: platformWidth,
-    height: platformHeight,
-    isSpikes: false
-  },
-  {
-    x: Math.random() * (canvas.width - platformWidth),
-    y: 1400,
-    width: platformWidth,
-    height: platformHeight,
-    isSpikes: false
-  },
-  {
-    x: Math.random() * (canvas.width - platformWidth),
-    y: 1600,
-    width: platformWidth,
-    height: platformHeight,
-    isSpikes: false
-  },
-];
+function initializePlatforms() {
+  return [
+    {
+      x: Math.random() * (canvas.width - platformWidth),
+      y: 600,
+      width: platformWidth,
+      height: platformHeight,
+      isSpikes: false
+    },
+    {
+      x: Math.random() * (canvas.width - platformWidth),
+      y: 800,
+      width: platformWidth,
+      height: platformHeight,
+      isSpikes: false
+    },
+    {
+      x: Math.random() * (canvas.width - platformWidth),
+      y: 1000,
+      width: platformWidth,
+      height: platformHeight,
+      isSpikes: false
+    },
+    {
+      x: Math.random() * (canvas.width - platformWidth),
+      y: 1200,
+      width: platformWidth,
+      height: platformHeight,
+      isSpikes: false
+    },
+    {
+      x: Math.random() * (canvas.width - platformWidth),
+      y: 1400,
+      width: platformWidth,
+      height: platformHeight,
+      isSpikes: false
+    },
+    {
+      x: Math.random() * (canvas.width - platformWidth),
+      y: 1600,
+      width: platformWidth,
+      height: platformHeight,
+      isSpikes: false
+    },
+  ];
+}
 
 function drawPlatforms() {
   for (let i = 0; i < platforms.length; i++) {
@@ -153,7 +155,7 @@ function update() {
   draw();
 }
 
-// Reset game
+// Life lost
 function lifeLost() {
   playerX = canvas.width / 2;
   playerY = 0;
@@ -165,7 +167,7 @@ function lifeLost() {
 function resetGame() {
   playerX = canvas.width / 2;
   playerY = 0;
-  platformX = Math.random() * (canvas.width - platformWidth);
+  platforms = initializePlatforms();
   score = 0;
   lives = 3;
 }
