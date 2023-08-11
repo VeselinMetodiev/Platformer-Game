@@ -8,7 +8,7 @@ let playerSpeed = 5;
 let playerWidth = 50;
 let playerHeight = 50;
 
-// Circle
+// ball
 playerX = canvas.width / 2;
 playerY = 0;
 const radius = 12;
@@ -111,7 +111,7 @@ function movePlatforms() {
   }
 }
 
-function drawCircle() {
+function drawball() {
   ctx.beginPath();
   ctx.arc(playerX, playerY, radius, 0, 2 * Math.PI);
   ctx.fillStyle = "blue";
@@ -124,7 +124,7 @@ function draw() {
   // Clear canvas
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  drawCircle();
+  drawball();
   drawPlatforms();
   movePlatforms();
 
@@ -187,39 +187,36 @@ function resetGame() {
   lives = 3;
 }
 
-// Function to check collision between circle and rectangle
-function checkCollision(circle, platforms) {
-  for (let i = 0; i < platforms.length; i++) {
-    let rectangle = platforms[i];
-    let circleDistanceX = Math.abs(
-      circle.x - rectangle.x - rectangle.width / 2
-    );
-    let circleDistanceY = Math.abs(
-      circle.y - rectangle.y - rectangle.height / 2
-    );
+// Function to check collision between ball and platform
+function checkCollision(ball, platforms) {
+  for (const platform of platforms) {
+    const ballDistanceX = Math.abs(ball.x - platform.x - platform.width / 2);
+    const ballDistanceY = Math.abs(ball.y - platform.y - platform.height / 2);
 
-    if (circleDistanceX > rectangle.width / 2 + circle.radius) continue;
-    if (circleDistanceY > rectangle.height / 2 + circle.radius) continue;
+    if (ballDistanceX > platform.width / 2 + ball.radius) continue;
+    if (ballDistanceY > platform.height / 2 + ball.radius) continue;
 
-    let cornerDistanceSq =
-      Math.pow(circleDistanceX - rectangle.width / 2, 2) +
-      Math.pow(circleDistanceY - rectangle.height / 2, 2);
+    const cornerDistanceSq =
+      Math.pow(ballDistanceX - platform.width / 2, 2) +
+      Math.pow(ballDistanceY - platform.height / 2, 2);
 
-
-    if ((circleDistanceX <= rectangle.width / 2) || (circleDistanceY <= rectangle.height / 2) || (cornerDistanceSq)) {
-      if (rectangle.isSpikes) {
+    if (
+      (ballDistanceX <= platform.width / 2) ||
+      (ballDistanceY <= platform.height / 2) ||
+      (cornerDistanceSq <= Math.pow(ball.radius, 2))
+    ) {
+      if (platform.isSpikes) {
         lifeLost();
       }
       return true;
     }
-
-
-    return cornerDistanceSq <= Math.pow(circle.radius, 2);
   }
+
   return false;
 }
 
-// Check if the circle hits the bottom or top
+
+// Check if the ball hits the bottom or top
 function collides(playerY, radius) {
   if (playerY < 0 || playerY + radius > canvas.height) {
     return true;
