@@ -27,51 +27,45 @@ function initializePlatforms() {
       y: 600,
       width: platformWidth,
       height: platformHeight,
-      isSpikes: false
+      hasSpikes: false
     },
     {
       x: Math.random() * (canvas.width - platformWidth),
       y: 800,
       width: platformWidth,
       height: platformHeight,
-      isSpikes: false
+      hasSpikes: false
     },
     {
       x: Math.random() * (canvas.width - platformWidth),
       y: 1000,
       width: platformWidth,
       height: platformHeight,
-      isSpikes: false
+      hasSpikes: false
     },
     {
       x: Math.random() * (canvas.width - platformWidth),
       y: 1200,
       width: platformWidth,
       height: platformHeight,
-      isSpikes: false
+      hasSpikes: false
     },
     {
       x: Math.random() * (canvas.width - platformWidth),
       y: 1400,
       width: platformWidth,
       height: platformHeight,
-      isSpikes: false
+      hasSpikes: false
     },
     {
       x: Math.random() * (canvas.width - platformWidth),
       y: 1600,
       width: platformWidth,
       height: platformHeight,
-      isSpikes: false
+      hasSpikes: false
     },
   ];
 }
-
-const spikes = [
-  { x: 50, y: canvas.height - 20, width: 20, height: 20 },
-  { x: 100, y: canvas.height - 20, width: 20, height: 20 },
-  // Add more spike objects here
-];
 
 function drawSpike(x, y, width, height) {
   ctx.beginPath();
@@ -86,7 +80,7 @@ function drawSpike(x, y, width, height) {
 function drawPlatforms() {
   for (let i = 0; i < platforms.length; i++) {
     let platform = platforms[i];
-    if (platform.isSpikes) {
+    if (platform.hasSpikes) {
       ctx.fillStyle = "red";
       for (let j = 0; j < 7; j++) {
         drawSpike(platform.x + 15 * j, platform.y, 10, 10);
@@ -105,7 +99,7 @@ function movePlatforms() {
     if (platforms[i].y < -50) {
       let randomNum = Math.floor(Math.random() * 11);
       console.log(randomNum);
-      platforms[i].isSpikes = randomNum % 5 === 0 ? true : false;
+      platforms[i].hasSpikes = randomNum % 5 === 0 ? true : false;
       platforms[i].y = 1000;
     }
   }
@@ -201,13 +195,14 @@ function checkPlatformCollision(ball, platforms) {
       Math.pow(ballDistanceY - platform.height / 2, 2);
 
     if (
-      (ballDistanceX <= platform.width / 2) ||
+      (ballDistanceX <= platform.width / 2 ) ||
       (ballDistanceY <= platform.height / 2) ||
       (cornerDistanceSq <= Math.pow(ball.radius, 2))
     ) {
-      if (platform.isSpikes) {
+      if (platform.hasSpikes) {
         lifeLost();
       }
+
       return true;
     }
   }
