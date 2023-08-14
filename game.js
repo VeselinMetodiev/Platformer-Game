@@ -111,7 +111,7 @@ function movePlatforms() {
   }
 }
 
-function drawball() {
+function drawBall() {
   ctx.beginPath();
   ctx.arc(playerX, playerY, radius, 0, 2 * Math.PI);
   ctx.fillStyle = "blue";
@@ -124,7 +124,7 @@ function draw() {
   // Clear canvas
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  drawball();
+  drawBall();
   drawPlatforms();
   movePlatforms();
 
@@ -136,8 +136,8 @@ function draw() {
   ctx.fillText("Lives: " + lives, 10, 60);
 }
 
-// Update game objects
-function update() {
+// updateBall game objects
+function updateBall() {
   // Move player left or right
   if (keys.left && playerX > 0) {
     playerX -= playerSpeed;
@@ -149,7 +149,7 @@ function update() {
   // Move platform down
   platformY += platformSpeed;
 
-  if (checkCollision({ x: playerX, y: playerY, radius: radius }, platforms)) {
+  if (checkPlatformCollision({ x: playerX, y: playerY, radius: radius }, platforms)) {
     playerY -= platformSpeed;
   } else {
     playerY += platformSpeed;
@@ -188,7 +188,7 @@ function resetGame() {
 }
 
 // Function to check collision between ball and platform
-function checkCollision(ball, platforms) {
+function checkPlatformCollision(ball, platforms) {
   for (const platform of platforms) {
     const ballDistanceX = Math.abs(ball.x - platform.x - platform.width / 2);
     const ballDistanceY = Math.abs(ball.y - platform.y - platform.height / 2);
@@ -245,7 +245,7 @@ document.addEventListener("keyup", (event) => {
 
 // Start game loop
 function gameLoop() {
-  update();
+  updateBall();
   window.requestAnimationFrame(gameLoop);
 }
 
