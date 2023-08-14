@@ -98,7 +98,6 @@ function movePlatforms() {
     platforms[i].y -= platformSpeed;
     if (platforms[i].y < -50) {
       let randomNum = Math.floor(Math.random() * 11);
-      console.log(randomNum);
       platforms[i].hasSpikes = randomNum % 5 === 0 ? true : false;
       platforms[i].y = 1000;
     }
@@ -143,11 +142,17 @@ function updateBall() {
   // Move platform down
   platformY += platformSpeed;
 
-  if (checkPlatformCollision({ x: playerX, y: playerY, radius: radius }, platforms)) {
+  if (hasCollisionFromAbove(playerX, playerY, radius, platforms)) {
     playerY -= platformSpeed;
   } else {
     playerY += platformSpeed;
   }
+
+  // if (checkPlatformCollision({ x: playerX, y: playerY, radius: radius }, platforms)) {
+  //   playerY -= platformSpeed;
+  // } else {
+  //   playerY += platformSpeed;
+  // }
 
   // Check for collision between player and enemy
   if (collides(playerY, radius)) {
@@ -179,6 +184,27 @@ function resetGame() {
   platforms = initializePlatforms();
   score = 0;
   lives = 3;
+}
+
+function hasCollisionFromAbove(ballX, ballY, ballRadius, platforms) {
+  for (const platform of platforms) {
+  const ballBottom = ballY + ballRadius;
+  const platformTop = platform.y;
+
+  // console.log({ballX});
+  // console.log({ballY});
+  // console.log({platformX});
+  // console.log({platformY});
+  // console.log({ballBottom});
+  // console.log({platformTop})
+
+
+  if (ballBottom >= platformTop && ballY <= platformTop && ballX >= platform.x && ballX <= platform.x + platform.width) {
+    console.log("hit")
+      return true;
+  }
+}
+  return false;
 }
 
 // Function to check collision between ball and platform
