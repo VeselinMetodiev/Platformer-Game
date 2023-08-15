@@ -27,42 +27,42 @@ function initializePlatforms() {
       y: 600,
       width: platformWidth,
       height: platformHeight,
-      hasSpikes: false
+      hasSpikes: false,
     },
     {
       x: Math.random() * (canvas.width - platformWidth),
       y: 800,
       width: platformWidth,
       height: platformHeight,
-      hasSpikes: false
+      hasSpikes: false,
     },
     {
       x: Math.random() * (canvas.width - platformWidth),
       y: 1000,
       width: platformWidth,
       height: platformHeight,
-      hasSpikes: false
+      hasSpikes: false,
     },
     {
       x: Math.random() * (canvas.width - platformWidth),
       y: 1200,
       width: platformWidth,
       height: platformHeight,
-      hasSpikes: false
+      hasSpikes: false,
     },
     {
       x: Math.random() * (canvas.width - platformWidth),
       y: 1400,
       width: platformWidth,
       height: platformHeight,
-      hasSpikes: false
+      hasSpikes: false,
     },
     {
       x: Math.random() * (canvas.width - platformWidth),
       y: 1600,
       width: platformWidth,
       height: platformHeight,
-      hasSpikes: false
+      hasSpikes: false,
     },
   ];
 }
@@ -73,7 +73,7 @@ function drawSpike(x, y, width, height) {
   ctx.lineTo(x + width / 2, y - height);
   ctx.lineTo(x + width, y);
   ctx.closePath();
-  ctx.fillStyle = 'red';
+  ctx.fillStyle = "red";
   ctx.fill();
 }
 
@@ -120,7 +120,6 @@ function draw() {
   drawBall();
   drawPlatforms();
   movePlatforms();
-
 
   // Draw score and lives
   ctx.fillStyle = "black";
@@ -188,26 +187,22 @@ function resetGame() {
 
 function hasCollisionFromAbove(ballX, ballY, ballRadius, platforms) {
   for (const platform of platforms) {
-  const ballBottom = ballY + ballRadius;
-  const platformTop = platform.y;
+    const ballBottom = ballY + ballRadius;
+    const platformTop = platform.y;
 
-  // console.log({ballX});
-  // console.log({ballY});
-  // console.log({platformX});
-  // console.log({platformY});
-  // console.log({ballBottom});
-  // console.log({platformTop})
-
-
-  if (ballBottom >= platformTop && ballY <= platformTop && ballX >= platform.x && ballX <= platform.x + platform.width) {
-    console.log("hit")
+    if (
+      ballBottom >= platformTop &&
+      ballY <= platformTop &&
+      ballX >= platform.x &&
+      ballX <= platform.x + platform.width
+    ) {
       return true;
+    }
   }
-}
   return false;
 }
 
-// Function to check collision between ball and platform
+// TODO: Special ability - Function to check collision between ball and platform
 function checkPlatformCollision(ball, platforms) {
   for (const platform of platforms) {
     const ballDistanceX = Math.abs(ball.x - platform.x - platform.width / 2);
@@ -221,9 +216,9 @@ function checkPlatformCollision(ball, platforms) {
       Math.pow(ballDistanceY - platform.height / 2, 2);
 
     if (
-      (ballDistanceX <= platform.width / 2 ) ||
-      (ballDistanceY <= platform.height / 2) ||
-      (cornerDistanceSq <= Math.pow(ball.radius, 2))
+      ballDistanceX <= platform.width / 2 ||
+      ballDistanceY <= platform.height / 2 ||
+      cornerDistanceSq <= Math.pow(ball.radius, 2)
     ) {
       if (platform.hasSpikes) {
         lifeLost();
@@ -235,7 +230,6 @@ function checkPlatformCollision(ball, platforms) {
 
   return false;
 }
-
 
 // Check if the ball hits the bottom or top
 function collides(playerY, radius) {
